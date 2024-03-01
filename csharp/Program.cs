@@ -6,6 +6,7 @@ namespace chsarp
         static void Main(String[]args){
             Println();
             Variable();
+            Constant();
         }
         static void Println(){
             Console.WriteLine("I am Learning C#");
@@ -23,11 +24,15 @@ namespace chsarp
             char - stores single characters, such as 'a' or 'B'. Char values are surrounded by single quotes
             string - stores text, such as "Hello World". String values are surrounded by double quotes
             bool - stores values with two states: true or false*/
+            // type variableName = value;
             int Integer = 24;
             double Decimal = 3.14;
             char character = 'A';
             string Text = "Hello World";
             bool boolean = true;
+        }
+        static void Constant(){
+            const int myNum = 15; // can't be overriden
         }
     }
 }
