@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Compile to exe
-      run: udo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
+      run: sudo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
     - name: Building
       run: mcs -out:Program.exe csharp/Program.cs
     - name: Add Exe to GitHub releases
