@@ -11,9 +11,9 @@ jobs:
           dotnet: [ '8.0.201' ]
       name: Automatic Build
       steps:
-        - uses: actions/checkout@v8
+        - uses: actions/checkout@v4
         - name: Setup dotnet
-          uses: actions/setup-dotnet@v8
+          uses: actions/setup-dotnet@v4
           with:
             dotnet-version: ${{ matrix.dotnet }}
         - name: Installing Dependencies

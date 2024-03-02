@@ -1,31 +1,38 @@
-name: Add to GitHub Releases
+name: .NET
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
-    build:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          dotnet: [ '8.0.201' ]
-      name: Automatic Build
-      steps:
-        - uses: actions/checkout@v4
-        - name: Setup dotnet
-          uses: actions/setup-dotnet@v4
-          with:
-            dotnet-version: ${{ matrix.dotnet }}
-        - name: Installing Dependencies
-          run: sudo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
-        - name: Building
-          run: mcs -out:Program.exe csharp/Program.cs
-        - name: Add Exe to GitHub releases
-          uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: "${{ secrets.TOKEN_GITHUB }}"
-            automatic_release_tag: "latest"
-            prerelease: false
-            title: "Automatic Build"
-            files: |
-              Program*.exe
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Compile to exe
+      run: udo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
+    - name: Building
+      run: mcs -out:Program.exe csharp/Program.cs
+    - name: Add Exe to GitHub releases
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.TOKEN_GITHUB }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        title: "Automatic Build"
+        files: |
+          Program*.exe
