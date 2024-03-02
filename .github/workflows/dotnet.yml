@@ -23,11 +23,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Compile to exe
+    - name: Installing Dependencies
       run: sudo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
-    - name: Building
+    - name: Compiling to exe
       run: mcs -out:Program.exe csharp/Program.cs
-    - name: Add Exe to GitHub releases
+    - name: Uploading exe to github releases
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.TOKEN_GITHUB }}"
