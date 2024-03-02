@@ -1,0 +1,31 @@
+name: Add to GitHub Releases
+
+on:
+  push:
+    branches: [ "master" ]
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          dotnet: [ '8.0.201' ]
+      name: Automatic Build
+      steps:
+        - uses: actions/checkout@v8
+        - name: Setup dotnet
+          uses: actions/setup-dotnet@v8
+          with:
+            dotnet-version: ${{ matrix.dotnet }}
+        - name: Installing Dependencies
+          run: sudo apt install gnupg ca-certificates && sudo apt update && sudo apt install mono-complete && sudo chmod +x csharp/Program.cs
+        - name: Building
+          run: mcs -out:Program.exe csharp/Program.cs
+        - name: Add Jar to GitHub releases
+          uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.TOKEN_GITHUB }}"
+            automatic_release_tag: "latest"
+            prerelease: false
+            title: "Automatic Build"
+            files: |
+              Program*.exe

@@ -30,6 +30,7 @@ namespace chsarp
             char character = 'A';
             string Text = "Hello World";
             bool boolean = true;
+            Console.WriteLine(Text);
         }
         static void Constant(){
             const int myNum = 15; // can't be overriden
