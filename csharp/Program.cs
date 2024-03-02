@@ -7,6 +7,7 @@ namespace chsarp
             Println();
             Variable();
             Constant();
+            MultipleVariables();
         }
         static void Println(){
             Console.WriteLine("I am Learning C#");
@@ -34,6 +35,10 @@ namespace chsarp
         }
         static void Constant(){
             const int myNum = 15; // can't be overriden
+        }
+        static void MultipleVariables() {
+            int x = 5, y = 6, z = 50;
+            Console.WriteLine(x + y + z);
         }
     }
 }
